@@ -35,4 +35,10 @@ public class StringCalculatorTest {
 	public void testNewLineSeparator() {
 	    assertEquals(6, stc.add("1\n2,3"), "Numbers with newlines and commas should be summed correctly");
 	}
+	
+	@Test
+	public void testCustomDelimiter() {
+	    assertEquals(10, stc.add("//;\n1;9"), "Custom delimiter should be recognized and used for splitting numbers");
+	}
+
 }
