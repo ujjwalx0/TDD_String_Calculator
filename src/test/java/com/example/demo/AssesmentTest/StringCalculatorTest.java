@@ -42,7 +42,7 @@ public class StringCalculatorTest {
 	    assertEquals(10, stc.add("//;\n1;9"), "Custom delimiter should be recognized and used for splitting numbers");
 	}
 
-	 @Test
+	   @Test
 	    public void testNegativeNumbers() {
 	        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 	            stc.add("-1,3,-4,9");
@@ -53,6 +53,14 @@ public class StringCalculatorTest {
 	    }
 	 
 
+	   @Test
+	    public void testGetCalledCount() {
+	        stc.add("1,2,3"); 
+	        stc.add("4,5,6"); 
+	        
+	        // Assert that GetCalledCount() returns 2, since we called add() twice
+	        assertEquals(2, stc.GetCalledCount(), "GetCalledCount should return the correct number of times Add() was called");
+	    }
 }
 
 

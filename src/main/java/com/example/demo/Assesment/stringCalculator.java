@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class stringCalculator {
-
+	
+	 private int calledCount = 0;
 	
 	// updated ADD Method to Handle 1 OR 2  
 	public int add(String numbers) {
+		 calledCount++; 
         if (numbers.isEmpty()) {
             return 0;
         }
@@ -64,4 +66,7 @@ public class stringCalculator {
         return sum;
     }
 	
+	  public int GetCalledCount() {
+	        return calledCount;
+	    }
 }
