@@ -1,6 +1,7 @@
 package com.example.demo.AssesmentTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,4 +42,17 @@ public class StringCalculatorTest {
 	    assertEquals(10, stc.add("//;\n1;9"), "Custom delimiter should be recognized and used for splitting numbers");
 	}
 
+	 @Test
+	    public void testNegativeNumbers() {
+	        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+	            stc.add("-1,3,-4,9");
+	        });
+
+	        // Assert that the exception message contains all negative numbers
+	        assertEquals("Negatives not allowed: -1, -4", exception.getMessage());
+	    }
+	 
+
 }
+
+
