@@ -18,8 +18,16 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
+	public void testOneNumber() {
+	    assertEquals(3, stc.add("3"), " one number should return the number");
+	}
+	@Test
 	public void testTwoNumbers() {
 	    assertEquals(3, stc.add("1,2"), "Sum of two numbers should return their sum");
 	}
 
+	@Test
+	public void testOf_N_Numbers() {
+	    assertEquals(25, stc.add("1,2,3,5,3,11"), "Sum of N numbers should return their sum");
+	}
 }
