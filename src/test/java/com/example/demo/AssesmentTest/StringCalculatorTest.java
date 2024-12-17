@@ -16,5 +16,10 @@ public class StringCalculatorTest {
 	public void testEmptyString() {
 		assertEquals(0, stc.add(""), "Empty string should return 0");
 	}
+	
+	@Test
+	public void testTwoNumbers() {
+	    assertEquals(3, stc.add("1,2"), "Sum of two numbers should return their sum");
+	}
 
 }
