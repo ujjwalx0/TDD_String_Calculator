@@ -77,6 +77,39 @@ public class StringCalculatorTest {
 	     
 	        assertEquals(6, stc.add("//[abcd]\n1abcd2abcd3"), "Custom delimiter [abcd] should work for any length");
 	    }
+	   
+	   
+	   @Test
+	   public void testMultipleDelimiters() {
+	     
+	       assertEquals(6, stc.add("//[*][%]\n1*2%3"), "Multiple delimiters [*] and [%] should be supported and the sum should be 6");
+
+	      
+	       assertEquals(10, stc.add("//[*][#][%]\n1*2#3%4"), "Multiple delimiters [*], [#], and [%] should be supported and the sum should be 6");
+
+	     
+	       IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+	           stc.add("//[*][%]\n1*2%3*-4");
+	       });
+	       assertEquals("Negatives not allowed: -4", exception.getMessage(), "Exception should indicate the negative number");
+	   }
+
+
+	   @Test
+	   public void testMultipleDelimitersWithLongerLength() {
+	       assertEquals(6, stc.add("//[**][%%]\n1**2%%3"), "Multiple delimiters [**] and [%%] should be supported and the sum should be 6");
+	       
+	      
+	       assertEquals(10, stc.add("//[%%][**]\n2%%3**5"), "Multiple delimiters [%%] and [**] should be supported and the sum should be 10");
+	       
+	      
+	       assertEquals(6, stc.add("//[%%][**]\n1%%2**3"), "Multiple delimiters [%%] and [**] should be supported and the sum should be 6");
+
+	      
+	       assertEquals(100, stc.add("//[***][&&]\n10***20&&70"), "Multiple delimiters [***] and [&&] should be supported and the sum should be 100");
+	   }
+
+
 }
 
 
