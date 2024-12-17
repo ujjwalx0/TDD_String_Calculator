@@ -61,6 +61,14 @@ public class StringCalculatorTest {
 	        // Assert that GetCalledCount() returns 2, since we called add() twice
 	        assertEquals(2, stc.GetCalledCount(), "GetCalledCount should return the correct number of times Add() was called");
 	    }
+	   
+	   @Test
+	    public void testNumbersGreaterThan1000() {
+	        
+	        assertEquals(2, stc.add("2,1001"), "Numbers greater than 1000 should be ignored");
+	        assertEquals(2, stc.add("1001,2"), "Numbers greater than 1000 should be ignored");
+	        assertEquals(1005, stc.add("2,1001,1000,3"), "Numbers greater than 1000 should be ignored");
+	    }
 }
 
 

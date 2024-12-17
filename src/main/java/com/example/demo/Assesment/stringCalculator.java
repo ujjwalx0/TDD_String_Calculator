@@ -33,8 +33,9 @@ public class stringCalculator {
                  if (numValue < 0) {
                      negativeNumbers.add(numValue); // Collecting negative numbers
                  }
-            	
-                sum += Integer.parseInt(num);
+                 if (numValue <= 1000) { // handling numbers only upto 1000
+                     sum += numValue;
+                 }
                 
             }
             
@@ -55,7 +56,9 @@ public class stringCalculator {
         	 if (numValue < 0) {
                  negativeNumbers.add(numValue); // Collecting negative numbers
              }
-            sum += Integer.parseInt(num);
+        	 if (numValue <= 1000) { // handling numbers only upto 1000
+                 sum += numValue;
+             }
         }
         
         if (!negativeNumbers.isEmpty()) {
