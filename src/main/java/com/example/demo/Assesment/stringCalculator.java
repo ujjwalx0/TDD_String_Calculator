@@ -5,88 +5,84 @@ import java.util.List;
 
 public class stringCalculator {
 
-    private int calledCount = 0;
+	private int calledCount = 0;
 
-    // updated ADD Method to Handle single delimiter (simple version)
-    public int add(String numbers) {
-        calledCount++; 
-        if (numbers.isEmpty()) {
-            return 0;
-        }
+	// MAIN ADD METHOD: HANDLES BOTH CUSTOM DELIMITERS AND DEFAULT CASE
+	public int add(String numbers) {
+		calledCount++;
 
-        // ArrayList for collecting negative nums if more than 1 or 1
-        List<Integer> negativeNumbers = new ArrayList<>();
+		// IF INPUT IS EMPTY, RETURN 0
+		if (numbers.isEmpty()) {
+			return 0;
+		}
 
-        // If numbers string starts with "//"
-        if (numbers.startsWith("//")) {
-        	 String delimiterSection = numbers.substring(2, numbers.indexOf("\n"));
-            
-             String[] delimiters = delimiterSection.split("\\]\\["); // Split at each occurrence of ][
-             for (int i = 0; i < delimiters.length; i++) {
-                 delimiters[i] = delimiters[i].replace("[", "").replace("]", ""); // Clean up the delimiters
-             }
+		// IF THE INPUT STARTS WITH "//", CUSTOM DELIMITERS ARE USED
+		if (numbers.startsWith("//")) {
+			return handleCustomDelimiter(numbers);
+		}
 
-             String nums = numbers.substring(numbers.indexOf("\n") + 1);
+		// OTHERWISE, USE DEFAULT DELIMITERS (COMMA AND NEWLINE)
+		return calculateSum(numbers.replace("\n", ","));
+	}
 
-             // Replacing each delimiter with a comma
-             for (String delimiter : delimiters) {
-                 nums = nums.replace(delimiter, ",");
-             }
+	// HELPER METHOD: HANDLES CASE WHEN CUSTOM DELIMITERS ARE PRESENT
+	private int handleCustomDelimiter(String numbers) {
+		// EXTRACT THE DELIMITER SECTION (BETWEEN "//" AND NEWLINE)
+		String delimiterSection = numbers.substring(2, numbers.indexOf("\n"));
 
-            // Split numbers by comma
-            String[] numArray = nums.split(",");
-            int sum = 0;
-            for (String num : numArray) {
-                int numValue = Integer.parseInt(num);
+		// SPLIT DELIMITERS (CAN BE MULTIPLE) USING REGEX "]["
+		String[] delimiters = delimiterSection.split("\\]\\[");
 
-                // CHECKing IF THE NUMBER IS NEGATIVE AND ADD TO THE NEGATIVE NUMBERS LIST IF SO
-                if (numValue < 0) {
-                    negativeNumbers.add(numValue); // Collecting negative numbers
-                }
+		// REMOVE BRACKETS AND CLEAN UP DELIMITERS
+		for (int i = 0; i < delimiters.length; i++) {
+			delimiters[i] = delimiters[i].replace("[", "").replace("]", "");
+		}
 
-                // ADDING THE NUMBER TO THE SUM ONLY IF IT IS NON-NEGATIVE AND <= 1000
-                if (numValue >= 0 && numValue <= 1000) {
-                    sum += numValue;
-                }
-            }
+		// EXTRACT THE NUMBERS AFTER THE NEWLINE
+		String nums = numbers.substring(numbers.indexOf("\n") + 1);
 
-            // IF THERE ARE NEGATIVE NUMBERS, THROWING AN EXCEPTION
-            if (!negativeNumbers.isEmpty()) {
-                String negatives = negativeNumbers.toString().replace("[", "").replace("]", "");
-                throw new IllegalArgumentException("Negatives not allowed: " + negatives);
-            }
-            return sum;
-        }
+		// REPLACE EACH CUSTOM DELIMITER WITH A COMMA
+		for (String delimiter : delimiters) {
+			nums = nums.replace(delimiter, ",");
+		}
 
-        //  split by commas and newlines
-        String[] numArray = numbers.replace("\n", ",").split(",");
-        int sum = 0;
+		// CALCULATE AND RETURN THE SUM AFTER HANDLING NUMBERS
+		return calculateSum(nums);
+	}
 
-        // Process each number and sum them up
-        for (String num : numArray) {
-            int numValue = Integer.parseInt(num);
+	// HELPER METHOD: CALCULATES THE SUM AND HANDLES NEGATIVES AND NUMBERS OVER 1000
+	private int calculateSum(String numbers) {
+		List<Integer> negativeNumbers = new ArrayList<>();
+		String[] numArray = numbers.split(",");
+		int sum = 0;
 
-            // CHECKING IF THE NUMBER IS NEGATIVE AND ADD TO THE NEGATIVE NUMBERS LIST IF SO
-            if (numValue < 0) {
-                negativeNumbers.add(numValue); // Collecting negative numbers
-            }
+		// LOOP THROUGH EACH NUMBER AND PROCESS IT
+		for (String num : numArray) {
+			int number = Integer.parseInt(num);
 
-            // ADDING THE NUMBER TO THE SUM ONLY IF IT IS NON-NEGATIVE AND <= 1000
-            if (numValue >= 0 && numValue <= 1000) {
-                sum += numValue;
-            }
-        }
+			// IF THE NUMBER IS NEGATIVE, ADD TO THE NEGATIVE LIST
+			if (number < 0) {
+				negativeNumbers.add(number);
+			}
 
-        // IF THERE ARE NEGATIVE NUMBERS, THROWING AN EXCEPTION
-        if (!negativeNumbers.isEmpty()) {
-            String negatives = negativeNumbers.toString().replace("[", "").replace("]", "");
-            throw new IllegalArgumentException("Negatives not allowed: " + negatives);
-        }
+			// ONLY ADD THE NUMBER TO THE SUM IF IT IS NON-NEGATIVE AND <= 1000
+			if (number >= 0 && number <= 1000) {
+				sum += number;
+			}
+		}
 
-        return sum;
-    }
+		// IF THERE ARE NEGATIVE NUMBERS, THROW AN EXCEPTION WITH A MESSAGE
+		if (!negativeNumbers.isEmpty()) {
+			String negatives = String.join(", ", negativeNumbers.stream().map(String::valueOf).toArray(String[]::new));
+			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
+		}
 
-    public int GetCalledCount() {
-        return calledCount;
-    }
+		// RETURN THE FINAL SUM
+		return sum;
+	}
+
+	// METHOD TO GET THE COUNT OF TIMES THE ADD METHOD HAS BEEN CALLED
+	public int getCalledCount() {
+		return calledCount;
+	}
 }
