@@ -30,4 +30,9 @@ public class StringCalculatorTest {
 	public void testOf_N_Numbers() {
 	    assertEquals(25, stc.add("1,2,3,5,3,11"), "Sum of N numbers should return their sum");
 	}
+	
+	@Test
+	public void testNewLineSeparator() {
+	    assertEquals(6, stc.add("1\n2,3"), "Numbers with newlines and commas should be summed correctly");
+	}
 }

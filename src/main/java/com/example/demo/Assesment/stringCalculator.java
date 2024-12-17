@@ -8,8 +8,8 @@ public class stringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         }
-
-        String[] numArray = numbers.split(",");
+     //modified the split for handling new line separators
+        String[] numArray = numbers.replace("\n", ",").split(",");
         int sum = 0;
 
         for (String num : numArray) {
