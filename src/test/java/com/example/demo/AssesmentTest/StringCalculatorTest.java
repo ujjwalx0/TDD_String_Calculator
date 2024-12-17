@@ -69,6 +69,14 @@ public class StringCalculatorTest {
 	        assertEquals(2, stc.add("1001,2"), "Numbers greater than 1000 should be ignored");
 	        assertEquals(1005, stc.add("2,1001,1000,3"), "Numbers greater than 1000 should be ignored");
 	    }
+	   
+	   @Test
+	    public void testCustomDelimiterOfAnyLength() {
+	      
+	        assertEquals(6, stc.add("//[***]\n1***2***3"), "Custom delimiter [***] should work for any length");
+	     
+	        assertEquals(6, stc.add("//[abcd]\n1abcd2abcd3"), "Custom delimiter [abcd] should work for any length");
+	    }
 }
 
 

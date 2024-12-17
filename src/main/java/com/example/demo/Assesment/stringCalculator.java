@@ -19,8 +19,13 @@ public class stringCalculator {
         
         // added logic for handling input with delimiters in the beginning
         if (numbers.startsWith("//")) {
-            String delimiter = numbers.substring(2, numbers.indexOf("\n"));
+           // String delimiter = numbers.substring(2, numbers.indexOf("\n"));
+        	//updated for handling delimiters of any length
+            String delimiter = numbers.substring(2, numbers.indexOf("\n")).replace("[", "").replace("]", "");
             String nums = numbers.substring(numbers.indexOf("\n") + 1);
+            
+           
+           
             
            
 
